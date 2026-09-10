@@ -104,7 +104,67 @@
   .nav-links{display:flex; gap:28px; font-size:14.5px; color:var(--stone-400);}
   .nav-links a{text-decoration:none; transition:color .2s;}
   .nav-links a:hover{color:var(--ember-bright);}
-  @media (max-width:720px){ .nav-links{display:none;} }
+  .nav-right{display:flex; align-items:center; gap:14px;}
+  .nav-burger{
+    display:none;
+    width:40px; height:40px; border-radius:8px;
+    background:transparent; border:1px solid var(--stone-700);
+    cursor:pointer; align-items:center; justify-content:center;
+    flex-shrink:0;
+  }
+  .nav-burger:hover{ border-color:var(--ember-dim); }
+  .nav-burger .burger-lines{
+    position:relative; width:18px; height:13px;
+  }
+  .nav-burger .burger-lines span{
+    position:absolute; left:0; width:100%; height:2px;
+    background:var(--parchment); border-radius:2px;
+    transition:transform .25s ease, opacity .2s ease, top .25s ease;
+  }
+  .nav-burger .burger-lines span:nth-child(1){ top:0; }
+  .nav-burger .burger-lines span:nth-child(2){ top:5.5px; }
+  .nav-burger .burger-lines span:nth-child(3){ top:11px; }
+  .nav-burger.open .burger-lines span:nth-child(1){ top:5.5px; transform:rotate(45deg); }
+  .nav-burger.open .burger-lines span:nth-child(2){ opacity:0; }
+  .nav-burger.open .burger-lines span:nth-child(3){ top:5.5px; transform:rotate(-45deg); }
+
+  .mobile-menu{
+    display:none;
+    position:fixed; top:0; right:0; height:100vh; width:min(78vw,300px);
+    background:var(--stone-900); border-left:1px solid var(--line);
+    z-index:60; padding:22px 22px 30px;
+    transform:translateX(100%);
+    transition:transform .28s ease;
+    box-shadow:-20px 0 50px -20px rgba(0,0,0,0.6);
+  }
+  .mobile-menu.open{ transform:translateX(0); }
+  .mobile-menu-top{
+    display:flex; align-items:center; justify-content:space-between; margin-bottom:30px;
+  }
+  .mobile-menu-close{
+    width:36px; height:36px; border-radius:8px; background:transparent;
+    border:1px solid var(--stone-700); color:var(--parchment); font-size:18px;
+    cursor:pointer;
+  }
+  .mobile-menu a{
+    display:block; text-decoration:none; color:var(--parchment-dim);
+    font-family:'Zilla Slab',serif; font-size:19px; font-weight:600;
+    padding:14px 4px; border-bottom:1px solid var(--stone-800);
+    transition:color .2s ease;
+  }
+  .mobile-menu a:hover{ color:var(--ember-bright); }
+  .mobile-menu .btn{ width:100%; margin-top:22px; text-align:center; display:block; text-decoration:none; }
+  .menu-overlay{
+    display:none; position:fixed; inset:0; background:rgba(10,7,4,0.6);
+    z-index:55; opacity:0; transition:opacity .25s ease;
+  }
+  .menu-overlay.open{ display:block; opacity:1; }
+
+  @media (max-width:720px){
+    .nav-links{display:none;}
+    .nav-burger{display:flex;}
+    .mobile-menu{display:block;}
+  }
 
   /* ---------- hero ---------- */
   .hero{
@@ -253,6 +313,19 @@
   .rank-card h3{ font-size:22px; color:var(--rank-color); margin-bottom:6px; }
   .rank-card .price{ font-size:21px; font-weight:800; font-family:'Zilla Slab',serif; }
   .rank-card .price span{ font-size:12px; font-weight:500; color:var(--stone-400); font-family:'Manrope',sans-serif; }
+  .price-options{ display:flex; gap:8px; margin:2px 0 14px; }
+  .price-btn{
+    flex:1; display:flex; flex-direction:column; align-items:center; gap:3px;
+    background:var(--stone-800); border:1px solid var(--stone-700); color:var(--parchment);
+    padding:10px 6px; border-radius:8px; cursor:pointer;
+    transition:background .15s ease, border-color .15s ease, color .15s ease, transform .15s ease;
+  }
+  .price-btn:hover{ background:var(--rank-color); border-color:var(--rank-color); color:#14100c; transform:translateY(-1px); }
+  .price-btn .dur{ font-size:10.5px; letter-spacing:0.3px; color:var(--stone-400); text-transform:uppercase; font-weight:700; }
+  .price-btn:hover .dur{ color:#14100c; opacity:0.75; }
+  .price-btn .amt{ font-family:'Zilla Slab',serif; font-weight:800; font-size:14.5px; }
+  .price-btn.permanent{ border-color:color-mix(in srgb, var(--rank-color) 55%, var(--stone-700)); background:color-mix(in srgb, var(--rank-color) 10%, var(--stone-800)); }
+  .rank-card .base-price{ font-size:11.5px; color:var(--stone-500); margin-bottom:10px; }
   .rank-card .tier{ font-size:12.5px; color:var(--stone-400); margin:6px 0 16px; }
   .rank-card .tier b{ color:var(--parchment-dim); }
   .rank-card ul{ list-style:none; margin:0 0 20px; padding:0; flex-grow:1; }
@@ -372,8 +445,26 @@
     <a href="#credit">Top Up Credit</a>
     <a href="#komunitas">Komunitas</a>
   </div>
-  <a href="#store" class="btn btn-primary" style="padding:10px 18px; font-size:13.5px;">Buka Store</a>
+  <div class="nav-right">
+    <a href="#store" class="btn btn-primary" style="padding:10px 18px; font-size:13.5px;">Buka Store</a>
+    <button class="nav-burger" id="navBurger" aria-label="Buka menu">
+      <span class="burger-lines"><span></span><span></span><span></span></span>
+    </button>
+  </div>
 </nav>
+
+<div class="menu-overlay" id="menuOverlay"></div>
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mobile-menu-top">
+    <div class="brand-name">Economy <b>Dewa Smp</b></div>
+    <button class="mobile-menu-close" id="mobileMenuClose">&times;</button>
+  </div>
+  <a href="#status">Status Server</a>
+  <a href="#store">Ruang Store</a>
+  <a href="#credit">Top Up Credit</a>
+  <a href="#komunitas">Komunitas</a>
+  <a href="#store" class="btn btn-primary">Buka Store</a>
+</div>
 
 <section class="hero" id="status">
   <div>
@@ -422,7 +513,15 @@
     <div class="rank-card" style="--rank-color:#6fcf7a;">
       <div class="badge">RANK</div>
       <h3>Aither</h3>
-      <div class="price">Rp 15.000 <span>/ selamanya</span></div>
+      <div class="base-price">Harga dasar Rp 15.000</div>
+      <div class="price-options">
+        <button class="price-btn" onclick="openModal('Rank Aither — 2 Bulan','Rp 20.000')">
+          <span class="dur">2 Bulan</span><span class="amt">Rp 20.000</span>
+        </button>
+        <button class="price-btn permanent" onclick="openModal('Rank Aither — Permanen','Rp 30.000')">
+          <span class="dur">Permanen</span><span class="amt">Rp 30.000</span>
+        </button>
+      </div>
       <div class="tier">Tier: <b>Starter Premium</b></div>
       <ul>
         <li>Portable workbench</li>
@@ -433,14 +532,21 @@
         <li>Maksimal 2 Jobs</li>
         <li>2 claim tiers</li>
       </ul>
-      <button class="buy-btn" onclick="openModal('Rank Aither','Rp 15.000')">Beli Sekarang</button>
     </div>
 
     <!-- Aion -->
     <div class="rank-card" style="--rank-color:#6fb8e0;">
       <div class="badge">RANK</div>
       <h3>Aion</h3>
-      <div class="price">Rp 30.000 <span>/ selamanya</span></div>
+      <div class="base-price">Harga dasar Rp 30.000</div>
+      <div class="price-options">
+        <button class="price-btn" onclick="openModal('Rank Aion — 2 Bulan','Rp 40.000')">
+          <span class="dur">2 Bulan</span><span class="amt">Rp 40.000</span>
+        </button>
+        <button class="price-btn permanent" onclick="openModal('Rank Aion — Permanen','Rp 60.000')">
+          <span class="dur">Permanen</span><span class="amt">Rp 60.000</span>
+        </button>
+      </div>
       <div class="tier">Tier: <b>Advanced Premium</b></div>
       <ul>
         <li>Portable anvil &amp; grindstone</li>
@@ -454,7 +560,6 @@
         <li>Menu warna chat, warna chat putih</li>
       </ul>
       <div class="inherit-note">Termasuk semua fitur Aither.</div>
-      <button class="buy-btn" onclick="openModal('Rank Aion','Rp 30.000')">Beli Sekarang</button>
     </div>
 
     <!-- Kratos (featured) -->
@@ -462,7 +567,15 @@
       <div class="best-badge">Terlaris</div>
       <div class="badge">RANK · TERLARIS</div>
       <h3>Kratos</h3>
-      <div class="price">Rp 50.000 <span>/ selamanya</span></div>
+      <div class="base-price">Harga dasar Rp 50.000</div>
+      <div class="price-options">
+        <button class="price-btn" onclick="openModal('Rank Kratos — 2 Bulan','Rp 65.000')">
+          <span class="dur">2 Bulan</span><span class="amt">Rp 65.000</span>
+        </button>
+        <button class="price-btn permanent" onclick="openModal('Rank Kratos — Permanen','Rp 100.000')">
+          <span class="dur">Permanen</span><span class="amt">Rp 100.000</span>
+        </button>
+      </div>
       <div class="tier">Tier: <b>Elite Premium</b></div>
       <ul>
         <li>/fly dan flight speed</li>
@@ -481,14 +594,21 @@
         <li>Akses quest editor</li>
       </ul>
       <div class="inherit-note">Termasuk fitur Aither &amp; Aion.</div>
-      <button class="buy-btn" onclick="openModal('Rank Kratos','Rp 50.000')">Beli Sekarang</button>
     </div>
 
     <!-- Archon -->
     <div class="rank-card" style="--rank-color:#4fd1c5;">
       <div class="badge">RANK</div>
       <h3>Archon</h3>
-      <div class="price">Rp 75.000 <span>/ selamanya</span></div>
+      <div class="base-price">Harga dasar Rp 75.000</div>
+      <div class="price-options">
+        <button class="price-btn" onclick="openModal('Rank Archon — 2 Bulan','Rp 100.000')">
+          <span class="dur">2 Bulan</span><span class="amt">Rp 100.000</span>
+        </button>
+        <button class="price-btn permanent" onclick="openModal('Rank Archon — Permanen','Rp 150.000')">
+          <span class="dur">Permanen</span><span class="amt">Rp 150.000</span>
+        </button>
+      </div>
       <div class="tier">Tier: <b>Master Premium</b></div>
       <ul>
         <li>/repair, /feed dan /heal</li>
@@ -506,14 +626,21 @@
         <li>AuraSkills multiplier 1.5x</li>
       </ul>
       <div class="inherit-note">Termasuk semua fitur sebelumnya.</div>
-      <button class="buy-btn" onclick="openModal('Rank Archon','Rp 75.000')">Beli Sekarang</button>
     </div>
 
     <!-- Anax -->
     <div class="rank-card" style="--rank-color:#f06fa0;">
       <div class="badge">RANK · ULTIMATE</div>
       <h3>Anax</h3>
-      <div class="price">Rp 120.000 <span>/ selamanya</span></div>
+      <div class="base-price">Harga dasar Rp 120.000</div>
+      <div class="price-options">
+        <button class="price-btn" onclick="openModal('Rank Anax — 2 Bulan','Rp 160.000')">
+          <span class="dur">2 Bulan</span><span class="amt">Rp 160.000</span>
+        </button>
+        <button class="price-btn permanent" onclick="openModal('Rank Anax — Permanen','Rp 240.000')">
+          <span class="dur">Permanen</span><span class="amt">Rp 240.000</span>
+        </button>
+      </div>
       <div class="tier">Tier: <b>Ultimate Premium</b></div>
       <ul>
         <li>/repair all</li>
@@ -533,7 +660,6 @@
         <li>Semua warna chat turunan</li>
       </ul>
       <div class="inherit-note">Termasuk semua fitur sebelumnya.</div>
-      <button class="buy-btn" onclick="openModal('Rank Anax','Rp 120.000')">Beli Sekarang</button>
     </div>
   </div>
 </section>
@@ -669,7 +795,34 @@
   }
   function closeModal(){ overlay.classList.remove('open'); }
   overlay.addEventListener('click', (e)=>{ if(e.target===overlay) closeModal(); });
-  document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeModal(); });
+  document.addEventListener('keydown', (e)=>{ if(e.key==='Escape'){ closeModal(); closeMobileMenu(); } });
+
+  /* ---------------- mobile hamburger menu ---------------- */
+  const navBurger = document.getElementById('navBurger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  const mobileMenuClose = document.getElementById('mobileMenuClose');
+  const menuOverlay = document.getElementById('menuOverlay');
+
+  function openMobileMenu(){
+    navBurger.classList.add('open');
+    mobileMenu.classList.add('open');
+    menuOverlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeMobileMenu(){
+    navBurger.classList.remove('open');
+    mobileMenu.classList.remove('open');
+    menuOverlay.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  navBurger.addEventListener('click', ()=>{
+    mobileMenu.classList.contains('open') ? closeMobileMenu() : openMobileMenu();
+  });
+  mobileMenuClose.addEventListener('click', closeMobileMenu);
+  menuOverlay.addEventListener('click', closeMobileMenu);
+  mobileMenu.querySelectorAll('a').forEach(a=>{
+    a.addEventListener('click', closeMobileMenu);
+  });
 
   /* ---------------- copy IP ---------------- */
   const fullAddress = 'play.economydewa.my.id:25719';
