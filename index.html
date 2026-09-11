@@ -282,17 +282,16 @@
 
   /* ---------- rank cards ---------- */
   .rank-grid{
-    display:grid; grid-template-columns:repeat(5,1fr); gap:18px;
+    display:grid; grid-template-columns:repeat(3,1fr); gap:28px;
   }
-  @media (max-width:1100px){ .rank-grid{grid-template-columns:repeat(3,1fr);} }
-  @media (max-width:720px){ .rank-grid{grid-template-columns:repeat(2,1fr);} }
-  @media (max-width:520px){ .rank-grid{grid-template-columns:1fr;} }
+  @media (max-width:980px){ .rank-grid{grid-template-columns:repeat(2,1fr); gap:22px;} }
+  @media (max-width:560px){ .rank-grid{grid-template-columns:1fr;} }
 
   .rank-card{
     background:var(--stone-900);
     border:1px solid var(--stone-700);
     border-radius:4px 14px 4px 14px;
-    padding:24px 20px 20px;
+    padding:28px 24px 24px;
     display:flex; flex-direction:column;
     position:relative;
     border-top:3px solid var(--rank-color, var(--ember));
@@ -304,28 +303,28 @@
   }
   .rank-card .badge{
     font-size:11px; font-weight:700; color:var(--rank-color); margin-bottom:10px;
+    letter-spacing:0.4px;
   }
   .rank-card .best-badge{
     position:absolute; top:-11px; right:16px;
     background:var(--ember); color:#1a1108; font-size:10.5px; font-weight:800;
     padding:4px 9px; border-radius:999px;
   }
-  .rank-card h3{ font-size:22px; color:var(--rank-color); margin-bottom:6px; }
+  .rank-card h3{ font-size:24px; color:var(--rank-color); margin-bottom:6px; }
   .rank-card .price{ font-size:21px; font-weight:800; font-family:'Zilla Slab',serif; }
   .rank-card .price span{ font-size:12px; font-weight:500; color:var(--stone-400); font-family:'Manrope',sans-serif; }
-  .price-options{ display:flex; gap:8px; margin:2px 0 14px; }
+  .price-options{ display:flex; gap:6px; margin:2px 0 14px; }
   .price-btn{
     flex:1; display:flex; flex-direction:column; align-items:center; gap:3px;
     background:var(--stone-800); border:1px solid var(--stone-700); color:var(--parchment);
-    padding:10px 6px; border-radius:8px; cursor:pointer;
+    padding:10px 4px; border-radius:8px; cursor:pointer; min-width:0;
     transition:background .15s ease, border-color .15s ease, color .15s ease, transform .15s ease;
   }
   .price-btn:hover{ background:var(--rank-color); border-color:var(--rank-color); color:#14100c; transform:translateY(-1px); }
-  .price-btn .dur{ font-size:10.5px; letter-spacing:0.3px; color:var(--stone-400); text-transform:uppercase; font-weight:700; }
+  .price-btn .dur{ font-size:9.5px; letter-spacing:0.2px; color:var(--stone-400); text-transform:uppercase; font-weight:700; white-space:nowrap; }
   .price-btn:hover .dur{ color:#14100c; opacity:0.75; }
-  .price-btn .amt{ font-family:'Zilla Slab',serif; font-weight:800; font-size:14.5px; }
+  .price-btn .amt{ font-family:'Zilla Slab',serif; font-weight:800; font-size:13px; white-space:nowrap; }
   .price-btn.permanent{ border-color:color-mix(in srgb, var(--rank-color) 55%, var(--stone-700)); background:color-mix(in srgb, var(--rank-color) 10%, var(--stone-800)); }
-  .rank-card .base-price{ font-size:11.5px; color:var(--stone-500); margin-bottom:10px; }
   .rank-card .tier{ font-size:12.5px; color:var(--stone-400); margin:6px 0 16px; }
   .rank-card .tier b{ color:var(--parchment-dim); }
   .rank-card ul{ list-style:none; margin:0 0 20px; padding:0; flex-grow:1; }
@@ -505,16 +504,18 @@
   <div class="section-head">
     <div class="kicker">Ruang Store</div>
     <h2>Percepat langkahmu di Goa Ekonomi</h2>
-    <p>Semua hasil top up langsung masuk ke akunmu di server. Pilih rank yang paling cocok dengan gaya mainmu, lalu klik Beli Sekarang.</p>
+    <p>Semua hasil top up langsung masuk ke akunmu di server. Pilih rank yang paling cocok dengan gaya mainmu, lalu klik Donasi Sekarang.</p>
   </div>
 
   <div class="rank-grid">
     <!-- Aither -->
-    <div class="rank-card" style="--rank-color:#6fcf7a;">
+    <div class="rank-card" style="--rank-color:#7d7d7d;">
       <div class="badge">RANK</div>
       <h3>Aither</h3>
-      <div class="base-price">Harga dasar Rp 15.000</div>
       <div class="price-options">
+        <button class="price-btn" onclick="openModal('Rank Aither — 1 Bulan','Rp 15.000')">
+          <span class="dur">1 Bulan</span><span class="amt">Rp 15.000</span>
+        </button>
         <button class="price-btn" onclick="openModal('Rank Aither — 2 Bulan','Rp 20.000')">
           <span class="dur">2 Bulan</span><span class="amt">Rp 20.000</span>
         </button>
@@ -535,11 +536,13 @@
     </div>
 
     <!-- Aion -->
-    <div class="rank-card" style="--rank-color:#6fb8e0;">
+    <div class="rank-card" style="--rank-color:#8f8f8f;">
       <div class="badge">RANK</div>
       <h3>Aion</h3>
-      <div class="base-price">Harga dasar Rp 30.000</div>
       <div class="price-options">
+        <button class="price-btn" onclick="openModal('Rank Aion — 1 Bulan','Rp 30.000')">
+          <span class="dur">1 Bulan</span><span class="amt">Rp 30.000</span>
+        </button>
         <button class="price-btn" onclick="openModal('Rank Aion — 2 Bulan','Rp 40.000')">
           <span class="dur">2 Bulan</span><span class="amt">Rp 40.000</span>
         </button>
@@ -563,12 +566,14 @@
     </div>
 
     <!-- Kratos (featured) -->
-    <div class="rank-card featured" style="--rank-color:#c774e8;">
+    <div class="rank-card featured" style="--rank-color:#a8a8a8;">
       <div class="best-badge">Terlaris</div>
       <div class="badge">RANK · TERLARIS</div>
       <h3>Kratos</h3>
-      <div class="base-price">Harga dasar Rp 50.000</div>
       <div class="price-options">
+        <button class="price-btn" onclick="openModal('Rank Kratos — 1 Bulan','Rp 50.000')">
+          <span class="dur">1 Bulan</span><span class="amt">Rp 50.000</span>
+        </button>
         <button class="price-btn" onclick="openModal('Rank Kratos — 2 Bulan','Rp 65.000')">
           <span class="dur">2 Bulan</span><span class="amt">Rp 65.000</span>
         </button>
@@ -597,11 +602,13 @@
     </div>
 
     <!-- Archon -->
-    <div class="rank-card" style="--rank-color:#4fd1c5;">
+    <div class="rank-card" style="--rank-color:#c2c2c2;">
       <div class="badge">RANK</div>
       <h3>Archon</h3>
-      <div class="base-price">Harga dasar Rp 75.000</div>
       <div class="price-options">
+        <button class="price-btn" onclick="openModal('Rank Archon — 1 Bulan','Rp 75.000')">
+          <span class="dur">1 Bulan</span><span class="amt">Rp 75.000</span>
+        </button>
         <button class="price-btn" onclick="openModal('Rank Archon — 2 Bulan','Rp 100.000')">
           <span class="dur">2 Bulan</span><span class="amt">Rp 100.000</span>
         </button>
@@ -629,11 +636,13 @@
     </div>
 
     <!-- Anax -->
-    <div class="rank-card" style="--rank-color:#f06fa0;">
+    <div class="rank-card" style="--rank-color:#e0e0e0;">
       <div class="badge">RANK · ULTIMATE</div>
       <h3>Anax</h3>
-      <div class="base-price">Harga dasar Rp 120.000</div>
       <div class="price-options">
+        <button class="price-btn" onclick="openModal('Rank Anax — 1 Bulan','Rp 120.000')">
+          <span class="dur">1 Bulan</span><span class="amt">Rp 120.000</span>
+        </button>
         <button class="price-btn" onclick="openModal('Rank Anax — 2 Bulan','Rp 160.000')">
           <span class="dur">2 Bulan</span><span class="amt">Rp 160.000</span>
         </button>
@@ -684,7 +693,7 @@
   <div class="community-grid">
     <a class="community-card" style="--card-color:#63d078;" href="https://chat.whatsapp.com/E1MgujNqTG4AubYPAvtHiP" target="_blank" rel="noopener">
       <div class="community-icon">
-        <svg viewBox="0 0 24 24" fill="none"><path d="M12 2a10 10 0 0 0-8.5 15.3L2 22l4.8-1.5A10 10 0 1 0 12 2Z" stroke="#63d078" stroke-width="1.6"/><path d="M8.4 8.3c.2-.5.5-.5.7-.5h.6c.2 0 .4 0 .6.4.2.5.7 1.7.8 1.8.1.2.1.3 0 .5-.1.2-.2.3-.4.5-.2.2-.4.4-.2.7.2.4.9 1.4 1.9 2.2 1.3 1.1 2.2 1.4 2.6 1.5.3.1.5.1.7-.1.2-.3.7-.8.9-1.1.2-.3.4-.2.7-.1.3.1 1.7.8 2 .9.3.2.5.2.6.4.1.2.1 1-.3 1.9-.4.9-2.1 1.6-2.9 1.7-.7.1-1.6.1-2.6-.2-.6-.2-1.4-.4-2.4-.9-4.2-1.8-6.9-6.1-7.1-6.4-.2-.3-1.7-2.3-1.7-4.3 0-2.1 1.1-3.1 1.5-3.5Z" fill="#63d078"/></svg>
+        <svg viewBox="0 0 32 32" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M16.004 4C9.377 4 4 9.373 4 16c0 2.216.6 4.35 1.74 6.222L4 28l5.94-1.706A11.94 11.94 0 0 0 16.004 28C22.63 28 28 22.627 28 16S22.63 4 16.004 4Zm0 21.867a9.83 9.83 0 0 1-5.02-1.374l-.36-.213-3.526 1.013 1.03-3.483-.235-.36A9.85 9.85 0 0 1 6.13 16c0-5.45 4.427-9.867 9.874-9.867 5.446 0 9.873 4.418 9.873 9.867 0 5.45-4.427 9.867-9.873 9.867Zm5.41-7.393c-.296-.148-1.752-.865-2.024-.964-.271-.099-.469-.148-.667.15-.197.296-.764.963-.937 1.161-.173.198-.346.222-.642.074-.296-.148-1.25-.46-2.382-1.469-.88-.785-1.474-1.755-1.647-2.051-.173-.296-.018-.456.13-.604.134-.133.296-.346.444-.519.148-.173.197-.297.296-.495.099-.198.05-.37-.025-.519-.074-.148-.666-1.606-.913-2.2-.24-.578-.484-.5-.666-.51l-.568-.01c-.198 0-.519.075-.79.372-.271.297-1.037 1.013-1.037 2.472 0 1.459 1.062 2.868 1.21 3.066.148.198 2.09 3.19 5.064 4.474.708.306 1.26.488 1.69.625.71.226 1.356.194 1.867.118.57-.085 1.752-.716 2-1.409.247-.692.247-1.286.173-1.409-.074-.124-.27-.198-.567-.347Z" fill="#63d078"/></svg>
       </div>
       <div>
         <div class="community-name">Grup WhatsApp</div>
@@ -774,7 +783,7 @@
       <div class="amount">${t.amount}</div>
       <div class="sub">Top up saldo Credit</div>
       <div class="price">${t.price}</div>
-      <button class="buy-btn">Beli</button>
+      <button class="buy-btn">Donasi</button>
     `;
     card.querySelector('.buy-btn').addEventListener('click', ()=> openModal(t.amount, t.price));
     grid.appendChild(card);
@@ -788,7 +797,7 @@
   function openModal(productName, price){
     document.getElementById('modalProduct').textContent = productName;
     document.getElementById('modalPrice').textContent = price;
-    const msg = encodeURIComponent(`Halo, saya mau beli ${productName} (${price}) di DEWA SMP.`);
+    const msg = encodeURIComponent(`Halo, saya mau donasi ${productName} (${price}) di DEWA SMP.`);
     document.getElementById('adminClayLink').href = `https://wa.me/${CLAY_NUM}?text=${msg}`;
     document.getElementById('adminWinataLink').href = `https://wa.me/${WINATA_NUM}?text=${msg}`;
     overlay.classList.add('open');
